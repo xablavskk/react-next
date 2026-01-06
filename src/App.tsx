@@ -1,19 +1,34 @@
-import { TimerIcon } from 'lucide-react'
 import './App.css'
-import { Heading } from './components/Heading'
-
 import '../src/styles/global.css'
 import '../src/styles/theme.css'
 
 function App() {
   return (
     <>
-      <Heading>
-        Ola brasil
-        <button>
-          <TimerIcon></TimerIcon>
-        </button>
-      </Heading>
+      <div className='container'>
+        <div className="content">
+            INICIO
+        </div>
+      </div>
+
+      <div className='container'>
+        <div className="content">
+            meio
+        </div>
+      </div>
+
+
+      <div className='container'>
+        <div className="content">
+            talvez meio dnv
+        </div>
+      </div>
+
+      <div className='container'>
+        <div className="content">
+            FIM
+        </div>
+      </div>
     </>
   )
 }

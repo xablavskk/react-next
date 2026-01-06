@@ -5,14 +5,18 @@
 }
 
 body {
-    background-color: rgb(65, 63, 63);
+    background-color: var(--background-rgb);
 }
 
-h1{
-    color: var(--primary-color);
+.container-fluid {
+    max-width: auto;
 }
 
-button {
-    width: 2.5rem;
-    height: 2.7rem;
+.container {
+    max-width: 98rem;
+    margin: 0 auto;
+}
+
+.content {
+    margin: 3.2rem;
 }
