@@ -1,34 +1,32 @@
 import './App.css'
 import '../src/styles/global.css'
 import '../src/styles/theme.css'
+import { Container } from './components/Container'
+import { Heading } from './components/Heading'
+import { Logo } from './components/Logo'
+import { Menu } from './components/Menu'
+import { CountDown } from './components/CountDown'
 
 function App() {
   return (
     <>
-      <div className='container'>
-        <div className="content">
-            INICIO
-        </div>
-      </div>
+      <Container>
+        <Heading>
+          <Logo></Logo>
+        </Heading>
+      </Container>
 
-      <div className='container'>
-        <div className="content">
-            meio
-        </div>
-      </div>
+      <Container>
+        <Heading>
+          <Menu></Menu>
+        </Heading>
+      </Container>
 
-
-      <div className='container'>
-        <div className="content">
-            talvez meio dnv
-        </div>
-      </div>
-
-      <div className='container'>
-        <div className="content">
-            FIM
-        </div>
-      </div>
+      <Container>
+        <Heading>
+          <CountDown></CountDown>
+        </Heading>
+      </Container>
     </>
   )
 }
