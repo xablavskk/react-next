@@ -7,3 +7,23 @@
 body {
     background-color: var(--background-rgb);
 }
+
+
+/* extrair para componente form */
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2rem;
+    
+}
