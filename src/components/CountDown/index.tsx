@@ -1,6 +1,7 @@
 import Countdown, { zeroPad, type CountdownRenderProps, type CountdownApi } from 'react-countdown';
 import styles from './styles.module.css';
 import { useRef } from 'react';
+import { useCounter } from '../../contexts/CounterContext';
 
 type CountDownProps = {
     minutos: number;
@@ -18,6 +19,7 @@ const renderer = ({ minutes, seconds }: CountdownRenderProps) => {
 export function CountDown({ minutos, segundos }: CountDownProps) {
     const totalMs = (minutos * 60 + segundos) * 1000;
     const countdownRef = useRef<CountdownApi | null>(null);
+  const { count, increment } = useCounter();
 
 
   return (
@@ -29,13 +31,20 @@ export function CountDown({ minutos, segundos }: CountDownProps) {
         renderer={renderer}
       />
 
-      <button onClick={() => countdownRef.current?.stop()}>
-        PAUSAR
-      </button>
+        <div className={styles.controls}>
+          <button onClick={() => countdownRef.current?.stop()}>
+            PAUSAR
+          </button>
 
-      <button onClick={() => countdownRef.current?.start()}>
-        Iniciar
-      </button>
+          <button onClick={() => countdownRef.current?.start()}>
+            Iniciar
+          </button>
+        </div>
+
+        <div className={styles.globalCounter}>
+          <span>Global counter: {count}</span>
+          <button onClick={increment}>+1</button>
+        </div>
     </div>
   );
 }
