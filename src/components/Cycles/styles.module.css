@@ -1,0 +1,25 @@
+.cycles-container {
+    display: flex;
+    gap: 1.6rem;
+    margin-top: 0.2rem;
+}
+
+.cycle {
+    background-color: rgb(110, 101, 101);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
+
+.working {
+    background-color: green;
+}
+
+.short-break {
+    background-color: orange;
+}
+
+.long-break {
+    background-color: red;
+}
+
