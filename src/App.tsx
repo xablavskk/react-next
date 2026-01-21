@@ -1,10 +1,9 @@
 import '../src/styles/global.css'
 import '../src/styles/theme.css'
-import { Routes, Route } from 'react-router-dom'
-import { MainTemplate } from './components/MainTemplate/indes'
-import { History } from './components/History'
 import { useRef, useState } from 'react'
 import { CounterProvider, useCounter } from './contexts/CounterContext'
+import { TaskProvider } from './contexts/TaskContext'
+import { Router } from './components/Router'
 
 function AppContent() {
   const [taskSate, setTaskState] = useState<any>(null)
@@ -41,7 +40,7 @@ function AppContent() {
         activeTask: newTask,
         currentCycle: 1,
         secondesRemaining: newTask.duration * 60,
-        formattedSecondsRemaining: '01:00',
+        formattedSecondsRemaining: `${String(Math.floor(newTask.duration)).padStart(2, '0')}:00`,
         tasks: [...prev?.tasks || [], newTask]
       }
     });
@@ -50,17 +49,16 @@ function AppContent() {
     taskInput.current.value = '';
   }
   return (
-    <Routes>
-      <Route path="/" element={<MainTemplate children={<></>} />} />
-      <Route path="/history" element={<History />} />
-    </Routes>
+    <Router />
   )
 }
 
 export default function App() {
   return (
     <CounterProvider>
-      <AppContent />
+      <TaskProvider>
+        <AppContent />
+      </TaskProvider>
     </CounterProvider>
   )
 }

@@ -2,56 +2,32 @@ import type React from "react"
 import { HistoryIcon, HouseIcon, SettingsIcon, SunsetIcon } from "lucide-react"
 
 import styles from './styles.module.css'
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
+import { useCounter } from "../../contexts/CounterContext"
 
 export function Menu(){
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
-    const navigate = useNavigate();
+    const { toggleTheme } = useCounter()
 
-    function toHome(){
-        navigate('/');
-    }
-
-    function toHistory(){
-        navigate('/history');
-    }
-
-    function toSettings(){
-        navigate('/settings');
-    }
-
-
-    function toggleTheme(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>){
+    function toggleThemeHandler(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>){
         event.preventDefault()
-
-        setTheme(ev => {
-            const newTheme = ev === 'light' ? 'dark' : 'light'
-            document.documentElement.setAttribute('data-theme', newTheme)
-            return newTheme
-        })
-
+        toggleTheme()
     }
-
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme)
-    }, [theme])
 
     return (
         <nav className={styles.menu}>
-            <a className={styles['menu-link']} onClick={toHome} href="#">
+            <Link className={styles['menu-link']} to="/">
                 <HouseIcon></HouseIcon>
-            </a>
+            </Link>
 
-            <a className={styles['menu-link']} onClick={toHistory} href="#">
+            <Link className={styles['menu-link']} to="/history">
                 <HistoryIcon></HistoryIcon>
-            </a>
+            </Link>
 
-            <a className={styles['menu-link']} onClick={toSettings} href="#">
+            <Link className={styles['menu-link']} to="/settings">
                 <SettingsIcon></SettingsIcon>
-            </a>
+            </Link>
 
-            <a className={styles['menu-link']} href="#" onClick={toggleTheme}>
+            <a className={styles['menu-link']} onClick={toggleThemeHandler}>
                 <SunsetIcon></SunsetIcon>
             </a>
         </nav>

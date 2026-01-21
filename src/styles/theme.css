@@ -3,3 +3,15 @@
     --background-rgb: rgb(65, 63, 63);
     --secondary-color: #999999;
 }
+
+[data-theme="light"] {
+    --primary-color: #9a9999;
+    --background-rgb: rgb(255, 255, 255);
+    --secondary-color: #666666;
+}
+
+[data-theme="dark"] {
+    --primary-color: #ffffff;
+    --background-rgb: rgb(65, 63, 63);
+    --secondary-color: #999999;
+}

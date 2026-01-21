@@ -2,6 +2,7 @@ import type React from "react"
 import { TimerIcon } from "lucide-react"
 
 import styles from './styles.module.css'
+import { Link } from "react-router-dom"
 
 type LogoProps = {
     children: React.ReactNode
@@ -10,10 +11,10 @@ type LogoProps = {
 export function Logo(){
     return (
         <div className={styles.logo}>
-            <a className={styles['logo-link']} href="#">
+            <Link className={styles['logo-link']} to="/">
                 <TimerIcon></TimerIcon>
                 <span>Chronos</span>
-            </a>
+            </Link>
         </div>
     )
 }

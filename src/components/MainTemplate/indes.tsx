@@ -1,14 +1,15 @@
 import '../../styles/global.css'
 import '../../styles/theme.css'
-import { useState, useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Logo } from '../Logo';
 import { Container } from '../Container';
-import { Menu } from '../Menu';
-import { Footer } from '../footer';
 import { Input } from '../DefaultInput';
 import { Cycles } from '../Cycles';
 import { CountDown } from '../CountDown';
+import { Menu } from '../Menu';
 import { Button } from '../Button';
+import { Footer } from '../footer';
+import { useTask } from '../../contexts/TaskContext';
 
 type MainTemplateProps = {
     children: React.ReactNode;
@@ -20,68 +21,90 @@ type CountDownHandle = {
 };
 
 export function MainTemplate({ children }: MainTemplateProps) {
-    const [numero, setNumero] = useState(0);
     const countdownRef = useRef<CountDownHandle>(null);
     const [isRunning, setIsRunning] = useState(false);
+    const taskInput = useRef<HTMLInputElement>(null);
+    const { addTask, activeTask, interruptTask } = useTask();
 
-    function incrementar() {
-        setNumero(numero + 1);
-    }
-
-    function handleToggleCountdown() {
-        if (isRunning) {
-            countdownRef.current?.stop();
-            setIsRunning(false);
-        } else {
-            countdownRef.current?.start();
+    useEffect(() => {
+        if (activeTask && !isRunning) {
+            console.log('Nova tarefa criada, iniciando countdown automaticamente');
             setIsRunning(true);
+            setTimeout(() => {
+                countdownRef.current?.start();
+            }, 100);
+        }
+    }, [activeTask]);
+
+    function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        
+        if (!activeTask) {
+            if (!taskInput.current?.value.trim()) {
+                alert("Digite uma tarefa válida.");
+                return;
+            }
+            console.log('Criando tarefa:', taskInput.current.value);
+            addTask(taskInput.current.value);
+            taskInput.current.value = '';
+        } else {
+            console.log('Toggle countdown - isRunning:', isRunning, 'activeTask:', activeTask);
+            if (isRunning) {
+                countdownRef.current?.stop();
+                setIsRunning(false);
+                
+                if (activeTask) {
+                    console.log('Interrompendo tarefa:', activeTask.id);
+                    interruptTask(activeTask.id);
+                }
+            } else {
+                console.log('Iniciando countdown com tarefa:', activeTask?.name);
+                countdownRef.current?.start();
+                setIsRunning(true);
+            }
         }
     }
 
     return (
-        <>
-      <Container>
-          <Logo></Logo>
-      </Container>
+          <>
+            <Container>
+                <Logo />
+            </Container>
 
-      <Container>
-          <Menu></Menu>
-      </Container>
+            <Container>
+                <Menu />
+            </Container>
 
-      <Container>
-          <CountDown ref={countdownRef} minutos={25} segundos={0}></CountDown>
-      </Container>
+            <Container>
+                <CountDown ref={countdownRef} minutos={25} segundos={0} />
+            </Container>
 
-      {children}
+            <Container>
+                <form className="form">
+                    <div className="row">
+                        <Input 
+                            label="Nome da Tarefa" 
+                            type="text" 
+                            id="taskName" 
+                            ref={taskInput}
+                            placeholder="Digite o nome da tarefa" 
+                        />
+                    </div>
 
-      <Container>
-        <form action="" className="form">
-          <div className="row">
-              <Input label='Configuracoes' type={"text"} id='input' placeholder='Digite algo ai' ></Input>
-          </div>
+                    <div className="row">
+                        <Cycles />
+                    </div>
 
-          <div className="row">
-            <p>
-              Lorem ipsum dolor sit amet.
-            </p>
-          </div>
+                    <Button 
+                        type="button" 
+                        isRunning={isRunning || activeTask !== null} 
+                        onClick={handleButtonClick} 
+                    />
+                </form>
+            </Container>
 
-          <div className="row">
-            <Cycles></Cycles>
-          </div>
+            <Footer />
 
-          <div className="row">
-            <button>Enviar</button>
-          </div>
-        </form>
-      </Container>
-
-        <Container>
-            <Button isRunning={isRunning} onClick={handleToggleCountdown}></Button>
-
-        </Container>
-
-      <Footer></Footer>
-    </>
-  );
+        </> 
+    );
 }

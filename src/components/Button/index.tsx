@@ -1,19 +1,20 @@
-import { CircleStop, PlayIcon } from "lucide-react";
+import { CircleStop, PlayIcon, Plus } from "lucide-react";
+import styles from './styles.module.css';
+import type { ButtonHTMLAttributes } from "react";
 
-import styles from './styles.module.css'
-
-type ButtonProps = {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     isRunning: boolean;
-    onClick?: () => void;
 };
 
-export function Button({ onClick, isRunning }: ButtonProps) {
-    const btnClass = !isRunning ? styles.btnSend : styles.btnStop;
-    const iconToShow = !isRunning ? <PlayIcon /> : <CircleStop />;
+export function Button({ isRunning, ...props }: ButtonProps) {
+    const btnClass = isRunning ? styles.btnStop : styles.btnSend;
+    const iconToShow = isRunning ? <CircleStop /> : <Plus />;
 
     return (
         <div className={styles.info}>
-            <button className={btnClass} onClick={onClick}>{iconToShow}</button>
+            <button className={btnClass} {...props}>
+                {iconToShow}
+            </button>
         </div>
-    )
+    );
 }

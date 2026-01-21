@@ -1,0 +1,18 @@
+.settingsContainer {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.settingsContainer h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary, #333);
+}
+
+.settingsContainer p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #666);
+  text-align: justify;
+}
