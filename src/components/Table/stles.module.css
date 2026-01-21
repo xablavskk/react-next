@@ -1,0 +1,27 @@
+.tableContainer {
+    margin: 2rem auto;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: black;
+    padding: 1rem;
+    text-align: center;
+
+}
+
+table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}

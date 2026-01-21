@@ -1,0 +1,41 @@
+.btnSend {
+    background-color: rgb(95, 91, 91);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100px;
+    gap: 8px;
+}
+
+.btnStop{
+    background-color: rgb(161, 27, 27);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100px;
+    gap: 8px;
+}
+
+.btn:hover {
+    background-color: rgb(120, 116, 116);
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 0;
+}

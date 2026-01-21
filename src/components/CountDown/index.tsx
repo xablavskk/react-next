@@ -1,11 +1,15 @@
-import Countdown, { zeroPad, type CountdownRenderProps} from 'react-countdown';
+import Countdown, { zeroPad, type CountdownRenderProps } from 'react-countdown';
 import styles from './styles.module.css';
-import { useRef } from 'react';
-import { useCounter } from '../../contexts/CounterContext';
+import { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 
 type CountDownProps = {
     minutos: number;
     segundos: number;
+};
+
+type CountDownHandle = {
+    start: () => void;
+    stop: () => void;
 };
 
 const renderer = ({ minutes, seconds }: CountdownRenderProps) => {
@@ -16,45 +20,32 @@ const renderer = ({ minutes, seconds }: CountdownRenderProps) => {
     );
 };
 
-export function CountDown({ minutos, segundos }: CountDownProps) {
+export const CountDown = forwardRef<CountDownHandle, CountDownProps>(
+  function CountDown({ minutos, segundos }, ref) {
     const totalMs = (minutos * 60 + segundos) * 1000;
     const countdownRef = useRef<Countdown | null>(null);
-  const { count, increment, cycle, incrementCycle, setInterruptDate } = useCounter();
+    const [isRunning, setIsRunning] = useState(false);
 
-  const handlePause = () => {
-    countdownRef.current?.stop();
-    setInterruptDate(new Date());
-  };
+    useImperativeHandle(ref, () => ({
+      start: () => {
+        setIsRunning(true);
+        countdownRef.current?.start();
+      },
+      stop: () => {
+        setIsRunning(false);
+        countdownRef.current?.pause();
+      },
+    }));
 
-  const handleComplete = () => {
-    incrementCycle();
-    countdownRef.current?.start();
-  };
-
-  return (
-    <div className={styles.container}>
-      <Countdown
-        ref={countdownRef}
-        date={Date.now() + totalMs}
-        autoStart={false}
-        renderer={renderer}
-        onComplete={handleComplete}
-      />
-
-        <div className={styles.controls}>
-          <button onClick={handlePause}>
-            PAUSAR
-          </button>
-
-          <button onClick={() => countdownRef.current?.start()}>
-            Iniciar
-          </button>
-        </div>
-
-        <div className={styles.globalCounter}>
-          <span>Ciclo: {cycle}</span>
-          <button onClick={increment}>+1</button>
-        </div>
-    </div>
-  );
-}
+    return (
+      <div className={styles.container}>
+        <Countdown
+          ref={countdownRef}
+          date={Date.now() + totalMs}
+          autoStart={false}
+          renderer={renderer}
+        />
+      </div>
+    );
+  }
+);
